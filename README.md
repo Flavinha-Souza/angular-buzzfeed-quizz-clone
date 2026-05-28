@@ -1,27 +1,86 @@
-# ProjetoBuzzfeed
+# 🧠 BuzzFeed Quiz Clone (Angular)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.2.
+Projeto desenvolvido durante o **Potência Tech Angular Developer Bootcamp (Powered by iFood)**, com foco em construção de aplicações modernas utilizando Angular, arquitetura componentizada e boas práticas de UI/UX.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 📌 Sobre o Projeto
 
-## Code scaffolding
+Este projeto é um clone inspirado no formato de quizzes interativos, onde o usuário responde perguntas e recebe um resultado baseado nas suas escolhas.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+O foco principal foi aplicar conceitos avançados do Angular, como:
 
-## Build
+- Componentização
+- Services e injeção de dependência
+- Data binding
+- Tipagem forte com TypeScript
+- Gerenciamento de estado simples
+- UX moderna e responsiva
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+---
 
-## Running unit tests
+## 🧠 Tecnologias Utilizadas
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![SCSS](https://img.shields.io/badge/SCSS-hotpink?style=for-the-badge&logo=sass&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
-## Running end-to-end tests
+---
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## ⚙️ Funcionalidades
 
-## Further help
+- ❓ Sistema de quiz interativo
+- 📊 Barra de progresso dinâmica
+- 🎯 Resultado baseado em respostas do usuário
+- 🔄 Botão de refazer quiz
+- 🌙 Dark mode com variáveis CSS
+- 📱 Layout responsivo (mobile-first)
+- ✨ Transições e animações suaves
+- 🧩 Componentização Angular
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+---
+
+## 🏗️ Arquitetura
+
+O projeto segue boas práticas de organização:
+
+- **Services** → Lógica de negócio centralizada
+- **Components** → Interface e interação com usuário
+- **Models** → Tipagem forte com TypeScript
+- **CSS Variables** → Sistema de design escalável
+
+---
+
+## 🎨 UI/UX
+
+- Design moderno estilo Glassmorphism
+- Centralização com Flexbox e `:host`
+- Micro-interações em botões
+- Transições entre perguntas
+- Tela de loading simulando processamento
+
+---
+
+## 🧠 Aprendizados
+
+Durante o desenvolvimento, foram aplicados conceitos como:
+
+- Separação de responsabilidades (SRP)
+- Uso de Services no Angular
+- Boas práticas com TypeScript
+- Controle de estado em aplicações front-end
+- Criação de interfaces dinâmicas
+- Melhorias de UX para aplicações interativas
+
+---
+
+## 🏆 Bootcamp
+
+Projeto desenvolvido no:
+
+**Potência Tech Angular Developer Bootcamp**  
+Powered by iFood 🚀
+
+---
