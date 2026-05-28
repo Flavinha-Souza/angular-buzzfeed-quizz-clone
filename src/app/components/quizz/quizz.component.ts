@@ -1,78 +1,81 @@
 import { Component, OnInit } from '@angular/core';
-import quizz_questions from "../../../assets/data/quizz_questions.json"
+import { Question, Quizz } from '../../models/quizz.model';
+import { QuizzService } from '../../services/quizz.service';
 
 @Component({
   selector: 'app-quizz',
   templateUrl: './quizz.component.html',
-  styleUrls: ['./quizz.component.css']
+  styleUrls: ['./quizz.component.css'],
 })
-
 export class QuizzComponent implements OnInit {
+  title: string = '';
+  questions: Question[] = [];
+  questionSelected?: Question;
+  answers: string[] = [];
+  answerSelected: string = '';
+  results: { [key: string]: string } = {};
+  questionIndex: number = 0;
+  questionMaxIndex: number = 0;
+  finished: boolean = false;
+  isCalculating: boolean = false;
+  isTransitioning: boolean = false;
+  isDarkMode: boolean = true;
 
-  title:string = ""
-
-  questions:any
-  questionSelected:any
-
-  answers:string[] = []
-  answerSelected:string =""
-
-  questionIndex:number =0
-  questionMaxIndex:number=0
-
-  finished:boolean = false
-
-  constructor() { }
+  constructor(private quizzService: QuizzService) {}
 
   ngOnInit(): void {
-    if(quizz_questions){
-      this.finished = false
-      this.title = quizz_questions.title
-
-      this.questions = quizz_questions.questions
-      this.questionSelected = this.questions[this.questionIndex]
-
-      this.questionIndex = 0
-      this.questionMaxIndex = this.questions.length
-
-      console.log(this.questionIndex)
-      console.log(this.questionMaxIndex)
-    }
-
+    this.startQuizz();
   }
 
-  playerChoose(value:string){
-    this.answers.push(value)
-    this.nextStep()
-
-  }
-
-  async nextStep(){
-    this.questionIndex+=1
-
-    if(this.questionMaxIndex > this.questionIndex){
-        this.questionSelected = this.questions[this.questionIndex]
-    }else{
-      const finalAnswer:string = await this.checkResult(this.answers)
-      this.finished = true
-      this.answerSelected = quizz_questions.results[finalAnswer as keyof typeof quizz_questions.results ]
+  startQuizz(): void {
+    const data = this.quizzService.getQuizzData();
+    if (data) {
+      this.finished = false;
+      this.title = data.title;
+      this.questions = data.questions;
+      this.results = data.results;
+      this.questionIndex = 0;
+      this.questionMaxIndex = this.questions.length;
+      this.questionSelected = this.questions[this.questionIndex];
+      this.answers = [];
+      this.answerSelected = '';
     }
   }
 
-  async checkResult(anwsers:string[]){
-
-    const result = anwsers.reduce((previous, current, i, arr)=>{
-        if(
-          arr.filter(item => item === previous).length >
-          arr.filter(item => item === current).length
-        ){
-          return previous
-        }else{
-          return current
-        }
-    })
-
-    return result
+  playerChoose(value: string): void {
+    if (this.finished || this.isCalculating || this.isTransitioning) return;
+    this.answers.push(value);
+    this.isTransitioning = true;
+    setTimeout(() => {
+      this.nextStep();
+      this.isTransitioning = false;
+    }, 400);
   }
 
+  private async nextStep(): Promise<void> {
+    this.questionIndex += 1;
+
+    if (this.questionMaxIndex > this.questionIndex) {
+      this.questionSelected = this.questions[this.questionIndex];
+    } else {
+      this.isCalculating = true;
+      setTimeout(async () => {
+        const finalAnswer = await this.quizzService.calculateResult(
+          this.answers,
+        );
+        this.finished = true;
+        this.isCalculating = false;
+        this.answerSelected =
+          this.results[finalAnswer as keyof typeof this.results];
+      }, 1000);
+    }
+  }
+
+  get progressPercent(): number {
+    return Math.round((this.questionIndex / this.questionMaxIndex) * 100);
+  }
+
+  restart(): void {
+    this.startQuizz();
+  }
 }

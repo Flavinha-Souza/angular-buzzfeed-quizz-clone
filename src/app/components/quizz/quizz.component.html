@@ -1,28 +1,38 @@
-<div class="quizz__container">
-
+<div class="quizz__container" [class.dark-mode]="isDarkMode">
   <div class="quizz_logo">
-    <img src="assets/imgs/logo.png" alt="" srcset="">
-    <h3>{{title}}</h3>
+    <img src="assets/imgs/logo.png" alt="Buzzfeed Logo" />
+    <h3>{{ title }}</h3>
   </div>
-
-  <div *ngIf=!finished class="quizz_questions">
-      <h3>{{questionSelected.question}}</h3>
+  <div class="progress-container" *ngIf="!finished">
+    <div class="progress-bar" [style.width.%]="progressPercent"></div>
   </div>
+  <div
+    *ngIf="!finished && !isCalculating && questionSelected"
+    class="quizz_questions"
+    [class.fade-out]="isTransitioning"
+  >
+    <h3>{{ questionSelected?.question }}</h3>
 
-  <div *ngIf=!finished class="quizz_options">
-
-    <button
-      *ngFor="let option of questionSelected.options; let i = index"
-      (click)="playerChoose(option.alias)"
-      class="btn-option"
-    >
-      {{option.name}}
-    </button>
-
+    <div class="quizz_options">
+      <button
+        *ngFor="let option of questionSelected?.options"
+        (click)="playerChoose(option.alias)"
+        class="btn-option ripple"
+        [disabled]="isTransitioning"
+      >
+        {{ option.name }}
+      </button>
+    </div>
   </div>
-
-  <div *ngIf=finished class="quizz_results">
+  <div *ngIf="isCalculating" class="quizz_calculating">
+    <div class="spinner"></div>
+    <p>O destino está sendo traçado...</p>
+  </div>
+  <div *ngIf="finished" class="quizz_results">
     <h1>O Seu resultado é:</h1>
-    <p>{{answerSelected}}</p>
+    <div class="result-card">
+      <p>{{ answerSelected }}</p>
+    </div>
+    <button class="btn-restart" (click)="restart()">Fazer Novamente</button>
   </div>
 </div>
